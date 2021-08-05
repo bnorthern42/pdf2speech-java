@@ -3,13 +3,8 @@ package net.pdf2speech;
 
 // Java code to convert text to speech
 
-
-
-import org.apache.pdfbox.cos.COSDocument;
-import org.apache.pdfbox.io.RandomAccessRead;
-import org.apache.pdfbox.pdfparser.PDFParser;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.text.PDFTextStripper;
+import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 import java.io.*;
 import java.util.Locale;
@@ -33,21 +28,36 @@ public class main {
         Scanner scan = new Scanner(System.in);
         System.out.println("Please Enter path to PDF");
 
-        //REPLACE WITH YOUR PATH to file
-        String filePath = ("drive:\\dir\\anotherDIR\\pdf_file.pdf");// =scan.next();
-        File f = new File(filePath);
-        String parsedText;
-       PDFManager  pdfManager = new PDFManager();
-
-       pdfManager.setFilePath(filePath);
+        //REPLACE WITH YOUR PATH to file pdf or docx
+       String filePath = ("drive:\\dir\\anotherDIR\\pdf_file.pdf");// =scan.next();
 
 
 
+
+
+
+
+
+        String parsedText = "";
 
 
         try {
-            parsedText = pdfManager.toText();
-            System.out.println(parsedText);
+
+            if(filePath.contains(".pdf")){
+                File f = new File(filePath);
+
+                PDFManager  pdfManager = new PDFManager();
+
+                pdfManager.setFilePath(filePath);
+                parsedText = pdfManager.toText();
+                System.out.println(parsedText);
+            } else if(filePath.contains(".docx")){
+                XWPFDocument docx = new XWPFDocument(new FileInputStream(filePath));
+                XWPFWordExtractor we = new XWPFWordExtractor(docx);
+                parsedText = we.getText();
+            }else throw new Exception("FILE TYPE NOT SUPPORTED");
+
+
             // Set property as Kevin Dictionary
             System.setProperty(
                     "freetts.voices",
