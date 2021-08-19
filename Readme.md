@@ -16,3 +16,8 @@ simple pdf to text and voice converter with PDFbox from apache
 
 - src/main/java/net/pdf2speech/main.java
 
+
+### other
+
+I do not take credit for code it was mostly just copy/paste to get a quick program up and running and stitching code from other websites together. 
+
